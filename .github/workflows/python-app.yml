@@ -43,7 +43,7 @@ jobs:
     - name: Test with pytest
       run: |
         cd ./tests/
-        if [ -f tests_main.py]; then pytest test_main.py; fi
+        if [ -f tests_main.py ]; then pytest test_main.py; fi
         cd ..
     - name: Run the app
       run: |
