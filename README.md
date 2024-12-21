@@ -12,6 +12,8 @@ It generates a random, Docker-like name and an epoch-based hash.
 
 ## How to Run
 
+Requires python 3.6 or later
+
 ```bash
 # Clone the repository
 git clone https://github.com/pracan/docker-like-name-generator.git
