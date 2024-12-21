@@ -2,13 +2,13 @@
 
 This project is a dummy for CI/CD testing 
 
-It generates a random, Docker-like name and an epoch-based hash.
+It generates a random, Docker-like name and an epoch-based hash
 
 ## Features
 
 - Standard Library-Only Python 3 Code
-- Generates unique, memorable names.
-- Includes epoch-based MD5 hashes.
+- Generates unique, memorable names
+- Includes epoch-based MD5 hashes
 
 ## How to Run
 
