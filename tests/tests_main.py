@@ -1,5 +1,8 @@
 import re
-from src.main import GetRandomName, GetEpochBasedHash, left, right
+import sys
+import os
+sys.path.append(os.path.abspath("../src/"))
+from main import GetRandomName, GetEpochBasedHash, left, right
 
 def test_random_name():
     name = GetRandomName(left, right)

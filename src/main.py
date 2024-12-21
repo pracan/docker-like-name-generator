@@ -374,5 +374,5 @@ def GetEpochBasedHash():
     return hashlib.md5(str(time.time()).replace('.','').encode("utf-8")).hexdigest()
 
 if __name__ == "__main__":
-    print(GetRandomName(left,right))
+    print(GetRandomName(left, right))
     print(GetEpochBasedHash())
