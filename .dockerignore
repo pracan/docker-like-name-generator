@@ -1,0 +1,25 @@
+# Exclude Python cache files
+__pycache__/
+*.py[cod]
+
+# Exclude test files
+tests/
+
+# Exclude virtual environments
+env/
+.venv/
+
+# Git-related files
+.git/
+.gitignore
+.gitattributes
+
+# Other files that shouldn't be in the image
+*.log
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Github
+.github/
