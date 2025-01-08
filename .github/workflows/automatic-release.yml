@@ -11,6 +11,9 @@ on:
 jobs:
   create-release-branch:
     runs-on: ubuntu-latest
+    permissions:
+        contents: write # Needed for creating branches and releases
+        actions: read   # For triggering other workflows
     steps:
       - name: Checkout latest branch
         uses: actions/checkout@v3
@@ -38,6 +41,8 @@ jobs:
   trigger-build:
     needs: create-release-branch
     runs-on: ubuntu-latest
+    permissions:
+        actions: read   # For triggering other workflows
     if: ${{ needs.create-release-branch.result == 'success' }}
     steps:
       - name: Trigger Build Docker Image Workflow
@@ -50,6 +55,8 @@ jobs:
   create-github-release:
     needs: trigger-build
     runs-on: ubuntu-latest
+    permissions:
+        contents: write # Needed for creating branches and releases
     if: ${{ needs.trigger-build.result == 'success' }}
     steps:
       - name: Create GitHub Release
