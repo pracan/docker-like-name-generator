@@ -43,6 +43,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
         actions: read   # For triggering other workflows
+        # permissions that needs to be inherited by the other workflow
+        contents: read
+        packages: write
+        attestations: write
+        id-token: write
     if: ${{ needs.create-release-branch.result == 'success' }}
     steps:
       - name: Trigger Build Docker Image Workflow
