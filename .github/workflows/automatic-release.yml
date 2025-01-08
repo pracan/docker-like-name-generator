@@ -17,14 +17,23 @@ jobs:
         with:
           ref: latest # Start from the "latest" branch
 
+#      - name: Create release branch
+#        id: create_branch
+#        run: |
+#          NEW_BRANCH="release-${{ github.event.inputs.version }}"
+#          git checkout -b $NEW_BRANCH
+#          git push origin $NEW_BRANCH
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create release branch
         id: create_branch
-        run: |
-          NEW_BRANCH="release-${{ github.event.inputs.version }}"
-          git checkout -b $NEW_BRANCH
-          git push origin $NEW_BRANCH
+        uses: peterjgrainger/action-create-branch@v2.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: 'release-${{ github.event.inputs.version }}'
+          sha: '${{ github.event.pull_request.head.sha }}'
 
   trigger-build:
     needs: create-release-branch
