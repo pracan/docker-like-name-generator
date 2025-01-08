@@ -1,0 +1,60 @@
+name: Automate Release
+
+on:
+  workflow_dispatch: # Manually trigger this workflow
+    inputs:
+      version: # Specify the new version to release
+        description: "Enter the new version (e.g., 1.0.1)"
+        required: true
+        type: string
+
+jobs:
+  create-release-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest branch
+        uses: actions/checkout@v3
+        with:
+          ref: latest # Start from the "latest" branch
+
+      - name: Create release branch
+        id: create_branch
+        run: |
+          NEW_BRANCH="release-${{ github.event.inputs.version }}"
+          git checkout -b $NEW_BRANCH
+          git push origin $NEW_BRANCH
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  trigger-build:
+    needs: create-release-branch
+    runs-on: ubuntu-latest
+    if: ${{ needs.create-release-branch.result == 'success' }}
+    steps:
+      - name: Trigger Build Docker Image Workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: build-container.yml # Replace with the name of your Docker build workflow
+          ref: ${{ needs.create-release-branch.outputs.NEW_BRANCH }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  create-github-release:
+    needs: trigger-build
+    runs-on: ubuntu-latest
+    if: ${{ needs.trigger-build.result == 'success' }}
+    steps:
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          release_name: v${{ github.event.inputs.version }}
+          body: |
+            🎉 **Release v${{ github.event.inputs.version }}** 🎉
+            
+            This release includes the following updates:
+            
+            - [Add your changelog items here!]
+          draft: true
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
