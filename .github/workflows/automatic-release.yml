@@ -62,6 +62,7 @@ jobs:
           repo: pracan/docker-like-name-generator
           workflow: build-container.yml # Replace with the name of your Docker build workflow
           ref: release-${{ github.event.inputs.version }}
+          token: "${{ secrets.GHACTIONS_WORKFLOW_DISPATCH }}"
           #token: ${{ secrets.GITHUB_TOKEN }}
 
   create-github-release:
