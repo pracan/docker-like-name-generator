@@ -50,13 +50,17 @@ jobs:
         id-token: write
     if: ${{ needs.create-release-branch.result == 'success' }}
     steps:
+      - name: ref check
+        run: |
+          echo ${{ needs.create-release-branch.outputs.NEW_BRANCH }}
+          
       - name: Trigger Build Docker Image Workflow
         uses: benc-uk/workflow-dispatch@v1
         with:
           repo: pracan/docker-like-name-generator
           workflow: build-container.yml # Replace with the name of your Docker build workflow
           ref: ${{ needs.create-release-branch.outputs.NEW_BRANCH }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          #token: ${{ secrets.GITHUB_TOKEN }}
 
   create-github-release:
     needs: trigger-build
