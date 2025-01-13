@@ -52,7 +52,7 @@ jobs:
     steps:
       - name: ref check
         run: |
-          echo ${{ needs.create-release-branch.outputs.NEW_BRANCH }}
+          echo release-${{ github.event.inputs.version }}
           echo ${{ github.repository }}
           echo "1"
           
@@ -61,7 +61,7 @@ jobs:
         with:
           repo: pracan/docker-like-name-generator
           workflow: build-container.yml # Replace with the name of your Docker build workflow
-          ref: ${{ needs.create-release-branch.outputs.NEW_BRANCH }}
+          ref: release-${{ github.event.inputs.version }}
           #token: ${{ secrets.GITHUB_TOKEN }}
 
   create-github-release:
