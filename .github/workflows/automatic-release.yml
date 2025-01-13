@@ -53,6 +53,8 @@ jobs:
       - name: ref check
         run: |
           echo ${{ needs.create-release-branch.outputs.NEW_BRANCH }}
+          echo ${{ github.repository }}
+          echo "1"
           
       - name: Trigger Build Docker Image Workflow
         uses: benc-uk/workflow-dispatch@v1
