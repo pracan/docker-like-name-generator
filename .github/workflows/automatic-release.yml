@@ -53,6 +53,7 @@ jobs:
       - name: Trigger Build Docker Image Workflow
         uses: benc-uk/workflow-dispatch@v1
         with:
+          repo: pracan/docker-like-name-generator
           workflow: build-container.yml # Replace with the name of your Docker build workflow
           ref: ${{ needs.create-release-branch.outputs.NEW_BRANCH }}
           token: ${{ secrets.GITHUB_TOKEN }}
